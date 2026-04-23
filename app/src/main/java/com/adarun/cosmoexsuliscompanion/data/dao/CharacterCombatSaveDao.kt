@@ -1,0 +1,29 @@
+package com.adarun.cosmoexsuliscompanion.data.dao
+
+import androidx.room.*
+import com.adarun.cosmoexsuliscompanion.data.model.CharacterCombatSave
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface CharacterCombatSaveDao {
+    @Insert
+    suspend fun insert (save: CharacterCombatSave): Long
+
+    @Update
+    suspend fun update (save: CharacterCombatSave)
+
+    @Delete
+    suspend fun delete (save: CharacterCombatSave)
+
+    @Query ("SELECT * FROM save WHERE chSaveId = :saveId")
+    suspend fun getSaveById (saveId: Int): CharacterCombatSave?
+
+    @Query ("SELECT * FROM save WHERE charId = :charId")
+    fun getSavesByCharacterId (charId: Int): Flow<List<CharacterCombatSave>>
+
+    @Query ("SELECT * FROM save WHERE combatId = :combatId")
+    fun getSavesByCombatId (combatId: Int): Flow<List<CharacterCombatSave>>
+
+    @Query ("SELECT * FROM save WHERE charId = :charId AND combatId = :combatId")
+    suspend fun getSave(charId: Int, combatId: Int): CharacterCombatSave?
+}
