@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import com.adarun.cosmoexsuliscompanion.data.database.AppDatabase
 import com.adarun.cosmoexsuliscompanion.data.model.*
 import com.adarun.cosmoexsuliscompanion.data.model.enums.*
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 

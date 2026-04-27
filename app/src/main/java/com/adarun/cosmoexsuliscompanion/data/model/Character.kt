@@ -46,4 +46,11 @@ data class Character (
     val weaponId: Int? = null,
     @ColumnInfo(name = "armorId")
     val armorId: Int? = null
-)
+) {
+    fun getHealth(): Int {
+        return baseStats.resilience * 2
+    }
+    fun getTemper(): Int {
+        return baseStats.grit + baseStats.conviction
+    }
+}
