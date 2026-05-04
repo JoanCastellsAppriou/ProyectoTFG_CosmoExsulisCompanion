@@ -11,7 +11,7 @@ sealed class NavRoutes (val route: String) {
         fun creationRoute (id: Int) = "create_character/$id"
     }
 
-    object CombatSetup : NavRoutes ("combat_setup/{instanceId}") {
-        fun creationRoute (id: Int) = "combat_setup/$id"
+    object CharacterDetail: NavRoutes ("character_detail/{characterId}") {
+        fun creationRoute (characterId: Int) = "character_detail/$characterId"
     }
 }

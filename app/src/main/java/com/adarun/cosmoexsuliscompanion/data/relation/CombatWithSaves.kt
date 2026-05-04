@@ -5,13 +5,20 @@ import androidx.room.Relation
 import com.adarun.cosmoexsuliscompanion.data.model.CharacterCombatSave
 import com.adarun.cosmoexsuliscompanion.data.model.CombatInstance
 
-data class CombatWithParticipants (
+data class CombatWithSaves (
     @Embedded
     val combat: CombatInstance,
 
     @Relation (
         parentColumn = "combatId",
+        entityColumn = "chSaveId"
+    )
+    val saves: List<CharacterCombatSave>,
+
+    @Relation (
+        entity = CharacterCombatSave::class,
+        parentColumn = "combatId",
         entityColumn = "combatId"
     )
-    val participants: List<CharacterCombatSave>
+    val savesWithCharacter: List<SaveWithCharacter>
 )

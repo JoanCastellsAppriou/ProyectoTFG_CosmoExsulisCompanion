@@ -1,0 +1,43 @@
+[
+  {
+    "equipmentCode": "BLADE_0",
+    "name": "Blade",
+    "type": "WEAPON",
+    "linkedStat": "AGILITY",
+    "diceCount": 1
+  },
+  {
+    "equipmentCode": "HAMMER_0",
+    "name": "Hammer",
+    "type": "WEAPON",
+    "linkedStat": "STRENGTH",
+    "diceCount": 1
+  },
+  {
+    "equipmentCode": "SPEAR_0",
+    "name": "Spear",
+    "type": "WEAPON",
+    "linkedStat": "AGILITY",
+    "diceCount": 2
+  },
+  {
+    "equipmentCode": "IRON_0",
+    "name": "Iron Plate",
+    "type": "ARMOR",
+    "agilityMod": -3,
+    "resilienceMod": 5
+  },
+  {
+    "equipmentCode": "MAIL_0",
+    "name": "Chain Mail",
+    "type": "ARMOR",
+    "agilityMod": -1,
+    "resilienceMod": 4
+  },
+  {
+    "equipmentCode": "HIDE_0",
+    "name": "Gambeson and Hides",
+    "type": "ARMOR",
+    "resilienceMod": 2
+  }
+]

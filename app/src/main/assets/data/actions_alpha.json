@@ -1,0 +1,170 @@
+[
+  {
+    "actionCode": "PUNCH_0",
+    "name": "Punch",
+    "skill": "STRENGTH",
+    "reqLevel": 5,
+    "diceThrows": 1,
+    "type": "ACTION",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER"
+  },
+  {
+    "actionCode": "WARCRY_O",
+    "name": "War Cry",
+    "skill": "GRIT",
+    "reqLevel": 5,
+    "diceThrows": 1,
+    "type": "ACTION",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER"
+  },
+  {
+    "actionCode": "STEELONESELF_0",
+    "name": "Steel Oneself",
+    "skill": "RESILIENCE",
+    "reqLevel": 5,
+    "diceThrows": 1,
+    "type": "ACTION",
+    "behavior": "SHIELD",
+    "allowedTarget": "SELF"
+  },
+  {
+    "actionCode": "PRAYER_0",
+    "name": "Prayer",
+    "skill": "CONVICTION",
+    "reqLevel": 5,
+    "diceThrows": 1,
+    "type": "ACTION",
+    "behavior": "HEALING",
+    "allowedTarget": "BOTH"
+  },
+  {
+    "actionCode": "ATTACKWITHWEAPON_0",
+    "name": "Attack with Weapon",
+    "skill": "AGILITY",
+    "reqLevel": 5,
+    "diceThrows": 1,
+    "type": "ACTION",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER"
+  },
+  {
+    "actionCode": "STUDYTHEOPPONENT_0",
+    "name": "Study the Opponent",
+    "skill": "LOGIC",
+    "reqLevel": 5,
+    "diceThrows": 1,
+    "type": "ACTION",
+    "behavior": "BUFF",
+    "allowedTarget": "SELF"
+  },
+  {
+    "actionCode": "FELLINGSTRIKE_0",
+    "name": "Felling Strike",
+    "skill": "STRENGTH",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER",
+    "selfPhysStrain": 1,
+    "otherPhysStrain": 2
+  },
+  {
+    "actionCode": "TACKLE_0",
+    "name": "Tackle",
+    "skill": "STRENGTH",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "MAIM",
+    "allowedTarget": "OTHER",
+    "targetSkill": "RESILIENCE"
+  },
+  {
+    "actionCode": "MINDWARD_0",
+    "name": "Mind Ward",
+    "skill": "GRIT",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "SHIELD",
+    "allowedTarget": "SELF"
+  },
+  {
+    "actionCode": "BRIEFRESPITE_0",
+    "name": "Brief Respite",
+    "skill": "RESILIENCE",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "HEALING",
+    "allowedTarget": "SELF"
+  },
+  {
+    "actionCode": "SUMMONMIGHT_0",
+    "name": "Summon Might",
+    "skill": "CONVICTION",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "BUFF",
+    "allowedTarget": "BOTH"
+  },
+  {
+    "actionCode": "SUMMONPEACE_0",
+    "name": "Summon Peace",
+    "skill": "CONVICTION",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "SHIELD",
+    "allowedTarget": "BOTH"
+  },
+  {
+    "actionCode": "PREPARETODODGE_0",
+    "name": "Prepare to Dodge",
+    "skill": "AGILITY",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "COMPETITION",
+    "allowedTarget": "SELF",
+    "selfPhysStrain": 1
+  },
+  {
+    "actionCode": "FLURRYOFBLOWS_0",
+    "name": "Flurry of Blows",
+    "skill": "AGILITY",
+    "reqLevel": 8,
+    "diceThrows": 3,
+    "type": "ABILITY",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER",
+    "refActionName": "Attack with Weapon"
+  },
+  {
+    "actionCode": "SIMPLEHEX_0",
+    "name": "Simple Hex",
+    "skill": "LOGIC",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER",
+    "selfMentStrain": 1,
+    "otherMentStrain": 2
+  },
+  {
+    "actionCode": "SIGNOFFIRE_0",
+    "name": "Sign of Fire",
+    "skill": "LOGIC",
+    "reqLevel": 8,
+    "diceThrows": 1,
+    "type": "ABILITY",
+    "behavior": "DAMAGE",
+    "allowedTarget": "OTHER",
+    "otherPhysStrain": 1
+  }
+]

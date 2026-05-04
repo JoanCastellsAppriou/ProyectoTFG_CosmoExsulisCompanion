@@ -9,8 +9,8 @@ interface CharacterActionXrefDao {
     suspend fun insert (xref: CharacterActionXref)
 
     @Delete
-    suspend fun delete(xref: CharacterActionXref)
+    suspend fun delete (xref: CharacterActionXref)
 
-    @Query("SELECT acId FROM character_action_xref WHERE charId = :charId")
-    suspend fun getActionIdsForCharacter(charId: Int): List<Int>
+    @Query ("SELECT actionCode FROM character_action_xref WHERE charId = :charId")
+    suspend fun getActionCodesForCharacter (charId: Int): List<String>
 }

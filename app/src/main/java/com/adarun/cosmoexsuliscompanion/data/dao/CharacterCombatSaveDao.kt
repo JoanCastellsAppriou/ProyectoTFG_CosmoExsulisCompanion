@@ -16,14 +16,14 @@ interface CharacterCombatSaveDao {
     suspend fun delete (save: CharacterCombatSave)
 
     @Query ("SELECT * FROM save WHERE chSaveId = :saveId")
-    suspend fun getSaveById (saveId: Int): CharacterCombatSave?
+    suspend fun getById (saveId: Int): CharacterCombatSave?
 
     @Query ("SELECT * FROM save WHERE charId = :charId")
-    fun getSavesByCharacterId (charId: Int): Flow<List<CharacterCombatSave>>
+    fun getByCharacter (charId: Int): Flow<List<CharacterCombatSave>>
 
     @Query ("SELECT * FROM save WHERE combatId = :combatId")
-    fun getSavesByCombatId (combatId: Int): Flow<List<CharacterCombatSave>>
+    fun getByCombat (combatId: Int): Flow<List<CharacterCombatSave>>
 
     @Query ("SELECT * FROM save WHERE charId = :charId AND combatId = :combatId")
-    suspend fun getSave(charId: Int, combatId: Int): CharacterCombatSave?
+    suspend fun get (charId: Int, combatId: Int): CharacterCombatSave?
 }

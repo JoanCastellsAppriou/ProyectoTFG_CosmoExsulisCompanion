@@ -10,14 +10,14 @@ data class CharacterWithEquipment (
     val character: Character,
 
     @Relation (
-        parentColumn = "weaponId",
-        entityColumn = "eqId"
+        parentColumn = "weaponCode",
+        entityColumn = "equipmentCode"
     )
     val weapon: Equipment?,
 
     @Relation (
-        parentColumn = "armorId",
-        entityColumn = "eqId"
+        parentColumn = "armorCode",
+        entityColumn = "equipmentCode"
     )
     val armor: Equipment?
 )

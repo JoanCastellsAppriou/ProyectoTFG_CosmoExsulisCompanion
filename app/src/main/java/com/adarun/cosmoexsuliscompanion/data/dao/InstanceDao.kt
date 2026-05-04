@@ -17,17 +17,20 @@ interface InstanceDao {
     @Delete
     suspend fun delete (instance: Instance)
 
-    @Query ("SELECT * FROM instance WHERE instanceId = :instanceId")
-    suspend fun getInstanceById (instanceId: Int): Instance?
+    @Query ("DELETE FROM instance WHERE instanceId IN (:ids)")
+    suspend fun deleteMultiple (ids: List<Int>)
 
     @Query ("SELECT * FROM instance ORDER BY createdAt DESC")
-    fun getAllInstances(): Flow<List<Instance>>
+    fun getAll(): Flow<List<Instance>>
+
+    @Query ("SELECT * FROM instance WHERE instanceId = :instanceId")
+    suspend fun getById (instanceId: Int): Instance?
 
     @Transaction
     @Query("SELECT * FROM instance WHERE instanceId = :instanceId")
-    suspend fun getInstanceWithCharacters(instanceId: Int): InstanceWithCharacters?
+    suspend fun getWithCharacters(instanceId: Int): InstanceWithCharacters?
 
     @Transaction
     @Query("SELECT * FROM instance WHERE instanceId = :instanceId")
-    suspend fun getInstanceWithCombats(instanceId: Int): InstanceWithCombats?
+    suspend fun getWithCombats(instanceId: Int): InstanceWithCombats?
 }

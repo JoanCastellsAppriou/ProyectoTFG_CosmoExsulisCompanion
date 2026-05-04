@@ -15,7 +15,7 @@ android {
         minSdk = 31
         targetSdk = 36
         versionCode = 1
-        versionName = "0.1a"
+        versionName = "0.2a"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -71,4 +71,7 @@ dependencies {
 
     // Compose para navegación
     implementation("androidx.navigation:navigation-compose:2.9.8")
+
+    // Gson para ficheros de datos
+    implementation("com.google.code.gson:gson:2.14.0")
 }

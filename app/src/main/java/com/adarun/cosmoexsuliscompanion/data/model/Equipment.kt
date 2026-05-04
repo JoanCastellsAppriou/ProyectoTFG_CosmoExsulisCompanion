@@ -1,17 +1,23 @@
 package com.adarun.cosmoexsuliscompanion.data.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.adarun.cosmoexsuliscompanion.data.model.enums.EquipmentType
-import com.adarun.cosmoexsuliscompanion.data.model.enums.StatType
+import com.adarun.cosmoexsuliscompanion.data.model.enums.SkillType
 
-@Entity(tableName = "equipment")
+@Entity(
+    tableName = "equipment",
+    indices = [
+        Index ("equipmentCode")
+    ]
+)
 data class Equipment (
-    @PrimaryKey(autoGenerate = true)
-    val eqId: Int = 0,
+    @PrimaryKey
+    val equipmentCode: String,
     val name: String,
     val type: EquipmentType,
-    val linkedStat: StatType? = null,
+    val linkedStat: SkillType? = null,
     val diceCount: Int? = null,
     val strengthMod: Int? = null,
     val agilityMod: Int? = null,
@@ -20,7 +26,7 @@ data class Equipment (
     val convictionMod: Int? = null,
     val logicMod: Int? = null
 ) {
-    fun toStatsModifiers(): Stats = Stats(
+    fun toStatsModifiers(): Skills = Skills(
         strength = strengthMod ?: 0,
         agility = agilityMod ?: 0,
         resilience = resilienceMod ?: 0,

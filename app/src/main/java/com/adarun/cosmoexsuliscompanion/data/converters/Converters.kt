@@ -3,7 +3,7 @@ package com.adarun.cosmoexsuliscompanion.data.converters
 import androidx.room.TypeConverter
 import com.adarun.cosmoexsuliscompanion.data.model.enums.ActionType
 import com.adarun.cosmoexsuliscompanion.data.model.enums.EquipmentType
-import com.adarun.cosmoexsuliscompanion.data.model.enums.StatType
+import com.adarun.cosmoexsuliscompanion.data.model.enums.SkillType
 import com.adarun.cosmoexsuliscompanion.data.model.enums.TargetType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -30,9 +30,9 @@ class Converters {
     fun toActionType (value: String): ActionType = ActionType.valueOf(value)
 
     @TypeConverter
-    fun fromStatType (value: StatType): String = value.name
+    fun fromSkillType (value: SkillType): String = value.name
     @TypeConverter
-    fun toStatType (value: String): StatType = StatType.valueOf(value)
+    fun toSkillType (value: String): SkillType = SkillType.valueOf(value)
 
     @TypeConverter
     fun fromEquipmentType(value: EquipmentType): String = value.name

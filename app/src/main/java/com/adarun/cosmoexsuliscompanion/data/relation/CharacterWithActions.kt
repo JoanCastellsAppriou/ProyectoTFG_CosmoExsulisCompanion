@@ -11,11 +11,11 @@ data class CharacterWithActions (
 
     @Relation (
         parentColumn = "charId",
-        entityColumn = "acId",
+        entityColumn = "actionCode",
         associateBy = Junction (
             value = CharacterActionXref::class,
             parentColumn = "charId",
-            entityColumn = "acId"
+            entityColumn = "actionCode"
         )
     )
     val actions: List<Action>

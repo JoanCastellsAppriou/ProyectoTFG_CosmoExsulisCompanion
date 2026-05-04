@@ -3,10 +3,12 @@ package com.adarun.cosmoexsuliscompanion
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.*
 import androidx.lifecycle.lifecycleScope
 import com.adarun.cosmoexsuliscompanion.data.database.AppDatabase
 import com.adarun.cosmoexsuliscompanion.data.model.*
 import com.adarun.cosmoexsuliscompanion.data.model.enums.*
+import com.adarun.cosmoexsuliscompanion.ui.navigation.AppNavHost
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -17,10 +19,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Si necesitas Compose UI después, usarás setContent { ... }
-        // Para la prueba, no llamamos a setContentView.
+        setContent {
+            AppNavHost()
+        }
 
-        lifecycleScope.launch {
+        /*lifecycleScope.launch {
             val db = AppDatabase.getDatabase(this@MainActivity)
 
             // ─── 1. Crear una Instancia ───
@@ -33,7 +36,7 @@ class MainActivity : ComponentActivity() {
                 Equipment(
                     name = "Espada larga",
                     type = EquipmentType.WEAPON,
-                    linkedStat = StatType.STRENGTH,
+                    linkedStat = SkillType.STRENGTH,
                     diceCount = 2,
                     strengthMod = 2
                 )
@@ -53,7 +56,7 @@ class MainActivity : ComponentActivity() {
             val character = Character(
                 instanceId = instanceId,
                 name = "Aragorn",
-                baseStats = Stats(strength = 18, agility = 15, resilience = 16),
+                baseSkills = Skills(strength = 18, agility = 15, resilience = 16),
                 weaponId = swordId,
                 armorId = shieldId
             )
@@ -64,12 +67,12 @@ class MainActivity : ComponentActivity() {
             val slashId = db.actionDao().insert(
                 Action(
                     name = "Tajo",
-                    skill = StatType.AGILITY,
+                    skill = SkillType.AGILITY,
                     reqLevel = 1,
                     diceThrows = 2,
                     type = ActionType.DAMAGE,
                     allowedTarget = TargetType.OTHER,
-                    targetSkill = StatType.STRENGTH,
+                    targetSkill = SkillType.STRENGTH,
                     selfPhysStrain = 0,
                     otherPhysStrain = null
                 )
@@ -78,7 +81,7 @@ class MainActivity : ComponentActivity() {
             val healId = db.actionDao().insert(
                 Action(
                     name = "Curar heridas leves",
-                    skill = StatType.CONVICTION,
+                    skill = SkillType.CONVICTION,
                     reqLevel = 2,
                     diceThrows = 1,
                     type = ActionType.HEALING,
@@ -106,7 +109,7 @@ class MainActivity : ComponentActivity() {
                     temper = 50,
                     physStrain = 0,
                     mentStrain = 0,
-                    modifiedStats = Stats(strength = 20, agility = 15, resilience = 16)
+                    modifiedSkills = Skills(strength = 20, agility = 15, resilience = 16)
                 )
             )
             Log.d(TAG, "Combate creado con ID: $combatId y save para personaje")
@@ -122,7 +125,7 @@ class MainActivity : ComponentActivity() {
             val charWithSaves = db.characterDao().getCharacterWithCombatSaves(charId)
             Log.d(TAG, "Personaje tiene ${charWithSaves?.combatSaves?.size} saves de combate")
             charWithSaves?.combatSaves?.forEach { save ->
-                Log.d(TAG, "  Save: salud=${save.health}, temper=${save.temper}, modStr=${save.modifiedStats.strength}")
+                Log.d(TAG, "  Save: salud=${save.health}, temper=${save.temper}, modStr=${save.modifiedSkills.strength}")
             }
 
             val combatWithP = db.combatInstanceDao().getCombatWithParticipants(combatId)
@@ -135,6 +138,6 @@ class MainActivity : ComponentActivity() {
             }
 
             Log.d(TAG, "¡PRUEBA COMPLETADA CON ÉXITO!")
-        }
+        }*/
     }
 }

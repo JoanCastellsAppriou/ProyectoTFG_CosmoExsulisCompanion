@@ -6,7 +6,7 @@ import androidx.room.Index
 
 @Entity(
     tableName = "character_action_xref",
-    primaryKeys = ["charId", "acId"],
+    primaryKeys = ["charId", "actionCode"],
     foreignKeys = [
         ForeignKey(
             entity = Character::class,
@@ -16,17 +16,17 @@ import androidx.room.Index
         ),
         ForeignKey(
             entity = Action::class,
-            parentColumns = ["acId"],
-            childColumns = ["acId"],
+            parentColumns = ["actionCode"],
+            childColumns = ["actionCode"],
             onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [
-        Index(value = ["acId"]),
+        Index(value = ["actionCode"]),
         Index(value = ["charId"])
     ]
 )
 data class CharacterActionXref (
     val charId: Int,
-    val acId: Int
+    val actionCode: String
 )

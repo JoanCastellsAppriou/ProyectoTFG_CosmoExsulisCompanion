@@ -1,6 +1,6 @@
 package com.adarun.cosmoexsuliscompanion.data.model.enums
 
-enum class StatType {
+enum class SkillType {
     STRENGTH,
     AGILITY,
     RESILIENCE,

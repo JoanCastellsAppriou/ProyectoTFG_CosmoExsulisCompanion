@@ -6,20 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.adarun.cosmoexsuliscompanion.data.converters.Converters
-import com.adarun.cosmoexsuliscompanion.data.dao.ActionDao
-import com.adarun.cosmoexsuliscompanion.data.dao.CharacterActionXrefDao
-import com.adarun.cosmoexsuliscompanion.data.dao.CharacterCombatSaveDao
-import com.adarun.cosmoexsuliscompanion.data.dao.CharacterDao
-import com.adarun.cosmoexsuliscompanion.data.dao.CombatInstanceDao
-import com.adarun.cosmoexsuliscompanion.data.dao.EquipmentDao
-import com.adarun.cosmoexsuliscompanion.data.dao.InstanceDao
-import com.adarun.cosmoexsuliscompanion.data.model.Action
-import com.adarun.cosmoexsuliscompanion.data.model.Character
-import com.adarun.cosmoexsuliscompanion.data.model.CharacterActionXref
-import com.adarun.cosmoexsuliscompanion.data.model.CharacterCombatSave
-import com.adarun.cosmoexsuliscompanion.data.model.CombatInstance
-import com.adarun.cosmoexsuliscompanion.data.model.Equipment
-import com.adarun.cosmoexsuliscompanion.data.model.Instance
+import com.adarun.cosmoexsuliscompanion.data.dao.*
+import com.adarun.cosmoexsuliscompanion.data.model.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Database (
     entities = [
@@ -31,7 +22,7 @@ import com.adarun.cosmoexsuliscompanion.data.model.Instance
         Equipment::class,
         CharacterActionXref::class
     ],
-    version = 1,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters (Converters::class)
@@ -45,18 +36,27 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun characterActionXrefDao(): CharacterActionXrefDao
 
     companion object {
-        private var INSTANCE: AppDatabase? = null
+        private var _instance: AppDatabase? = null
 
         @Synchronized
-        fun getDatabase (context: Context): AppDatabase {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(
-                    context.applicationContext,
+        fun getDatabase(context: Context): AppDatabase {
+            return _instance ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context,
                     AppDatabase::class.java,
-                    "cosmoexsuli_database"
-                ).build()
+                    "app_database"
+                )
+                    .fallbackToDestructiveMigration(false)
+                    .build()
+
+                _instance = instance
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    DataSeeder.Seed(context, instance)
+                }
+
+                instance
             }
-            return INSTANCE!!
         }
     }
 }

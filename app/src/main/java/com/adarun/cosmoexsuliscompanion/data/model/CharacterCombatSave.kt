@@ -23,6 +23,7 @@ import androidx.room.PrimaryKey
         )
     ],
     indices = [
+        Index(value = ["charId", "combatId"], unique = true),
         Index(value = ["charId"]),
         Index(value = ["combatId"])
     ]
@@ -37,5 +38,5 @@ data class CharacterCombatSave (
     val physStrain: Int,
     val mentStrain: Int,
     @Embedded (prefix = "mod_")
-    val modifiedStats: Stats
+    val modifiedSkills: Skills
 )

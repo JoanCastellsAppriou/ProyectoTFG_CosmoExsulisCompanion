@@ -2,8 +2,9 @@ package com.adarun.cosmoexsuliscompanion.data.dao
 
 import androidx.room.*
 import com.adarun.cosmoexsuliscompanion.data.model.Character
+import com.adarun.cosmoexsuliscompanion.data.relation.CharacterLoadout
 import com.adarun.cosmoexsuliscompanion.data.relation.CharacterWithActions
-import com.adarun.cosmoexsuliscompanion.data.relation.CharacterWithCombatSaves
+import com.adarun.cosmoexsuliscompanion.data.relation.CharacterWithSaves
 import com.adarun.cosmoexsuliscompanion.data.relation.CharacterWithEquipment
 import kotlinx.coroutines.flow.Flow
 
@@ -12,30 +13,44 @@ interface CharacterDao {
     @Insert
     suspend fun insert (character: Character): Long
 
-    @Update
-    suspend fun update (character: Character)
+    // UPDATE QUERIES ===================================================================
+        @Update
+        suspend fun update (character: Character)
 
-    @Delete
-    suspend fun delete (character: Character)
+        @Query ("UPDATE character SET instanceId = :newInstanceId WHERE charId = :charId")
+        suspend fun migrate (charId: Int, newInstanceId: Int)
+    //===================================================================================
+
+    // DELETE QUERIES ===================================================================
+        @Delete
+        suspend fun delete (character: Character)
+
+        @Query ("DELETE FROM character WHERE charId IN (:charIds)")
+        suspend fun deleteMultiple (charIds: List<Int>)
+    //===================================================================================
 
     @Query ("SELECT * FROM `character` WHERE charId = :charId")
-    suspend fun getCharacterById (charId: Int): Character?
+    suspend fun getById (charId: Int): Character
 
     @Query ("SELECT * FROM `character` WHERE instanceId = :instanceId")
-    fun getCharactersByInstance (instanceId: Int): Flow<List<Character>>
+    fun getByInstance (instanceId: Int): Flow<List<Character>>
 
-    @Query ("UPDATE character SET instanceId = :newInstanceId WHERE charId = :charId")
-    suspend fun migrateCharacter (charId: Int, newInstanceId: Int)
 
-    @Transaction
-    @Query("SELECT * FROM `character` WHERE charId = :charId")
-    suspend fun getCharacterWithEquipment(charId: Int): CharacterWithEquipment?
+    // TRANSACTION QUERIES ==============================================================
+        @Transaction
+        @Query("SELECT * FROM `character` WHERE charId = :charId")
+        suspend fun getLoadout(charId: Int): CharacterLoadout
 
-    @Transaction
-    @Query("SELECT * FROM `character` WHERE charId = :charId")
-    suspend fun getCharacterWithCombatSaves(charId: Int): CharacterWithCombatSaves?
+        @Transaction
+        @Query("SELECT * FROM `character` WHERE charId = :charId")
+        suspend fun getWithActions(charId: Int): CharacterWithActions
 
-    @Transaction
-    @Query("SELECT * FROM `character` WHERE charId = :charId")
-    suspend fun getCharacterWithActions(charId: Int): CharacterWithActions?
+        @Transaction
+        @Query("SELECT * FROM `character` WHERE charId = :charId")
+        suspend fun getWithEquipment(charId: Int): CharacterWithEquipment
+
+        @Transaction
+        @Query("SELECT * FROM `character` WHERE charId = :charId")
+        suspend fun getWithSaves (charId: Int): CharacterWithSaves
+    //===================================================================================
 }

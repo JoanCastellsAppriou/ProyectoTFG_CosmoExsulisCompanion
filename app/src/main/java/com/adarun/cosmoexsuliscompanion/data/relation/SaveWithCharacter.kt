@@ -1,16 +1,16 @@
 package com.adarun.cosmoexsuliscompanion.data.relation
 
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room.*
 import com.adarun.cosmoexsuliscompanion.data.model.Character
 import com.adarun.cosmoexsuliscompanion.data.model.CharacterCombatSave
-data class CharacterWithCombatSaves (
+
+data class SaveWithCharacter (
     @Embedded
-    val character: Character,
+    val save: CharacterCombatSave,
 
     @Relation (
         parentColumn = "charId",
         entityColumn = "charId"
     )
-    val combatSaves: List<CharacterCombatSave>
+    val character: Character
 )

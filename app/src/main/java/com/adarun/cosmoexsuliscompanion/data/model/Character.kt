@@ -18,21 +18,21 @@ import androidx.room.PrimaryKey
         ),
         ForeignKey(
             entity = Equipment::class,
-            parentColumns = ["eqId"],
-            childColumns = ["weaponId"],
+            parentColumns = ["equipmentCode"],
+            childColumns = ["weaponCode"],
             onDelete = ForeignKey.SET_NULL
         ),
         ForeignKey(
             entity = Equipment::class,
-            parentColumns = ["eqId"],
-            childColumns = ["armorId"],
+            parentColumns = ["equipmentCode"],
+            childColumns = ["armorCode"],
             onDelete = ForeignKey.SET_NULL
         )
     ],
     indices = [
         Index(value = ["instanceId"]),
-        Index(value = ["weaponId"]),
-        Index(value = ["armorId"])
+        Index(value = ["weaponCode"]),
+        Index(value = ["armorCode"])
     ]
 )
 data class Character (
@@ -41,16 +41,16 @@ data class Character (
     val instanceId: Int,
     val name: String,
     @Embedded (prefix = "base_")
-    val baseStats: Stats,
-    @ColumnInfo(name = "weaponId")
-    val weaponId: Int? = null,
-    @ColumnInfo(name = "armorId")
-    val armorId: Int? = null
+    val baseSkills: Skills,
+    @ColumnInfo(name = "weaponCode")
+    val weaponCode: String? = null,
+    @ColumnInfo(name = "armorCode")
+    val armorCode: String? = null
 ) {
     fun getHealth(): Int {
-        return baseStats.resilience * 2
+        return baseSkills.resilience * 2
     }
     fun getTemper(): Int {
-        return baseStats.grit + baseStats.conviction
+        return baseSkills.grit + baseSkills.conviction
     }
 }

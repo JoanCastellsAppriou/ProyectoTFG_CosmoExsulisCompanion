@@ -5,7 +5,8 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.adarun.cosmoexsuliscompanion.data.model.enums.ActionType
-import com.adarun.cosmoexsuliscompanion.data.model.enums.StatType
+import com.adarun.cosmoexsuliscompanion.data.model.enums.BehaviorType
+import com.adarun.cosmoexsuliscompanion.data.model.enums.SkillType
 import com.adarun.cosmoexsuliscompanion.data.model.enums.TargetType
 
 @Entity (
@@ -13,27 +14,29 @@ import com.adarun.cosmoexsuliscompanion.data.model.enums.TargetType
     foreignKeys = [
         ForeignKey (
             entity = Action::class,
-            parentColumns = ["acId"],
-            childColumns = ["refActionId"],
+            parentColumns = ["actionCode"],
+            childColumns = ["refActionCode"],
             onDelete = ForeignKey.SET_NULL
         )
     ],
     indices = [
-        Index(value = ["refActionId"])
+        Index("actionCode"),
+        Index("refActionCode")
     ]
 )
 data class Action (
-    @PrimaryKey (autoGenerate = true)
-    val acId: Int = 0,
+    @PrimaryKey
+    val actionCode: String,
     val name: String,
-    val skill: StatType,
+    val skill: SkillType,
     val reqLevel: Int,
     val diceThrows: Int,
     val type: ActionType,
+    val behavior: BehaviorType, // Necesita incluir si es daño a salud o temple
     val allowedTarget: TargetType, // Propuesta: List<TargetType> para mayor complejidad a futuro
     val thenEffect: String? = null, // Probablemente necesite rehacerse
-    val refActionId: Int? = null,
-    val targetSkill: StatType? = null,
+    val refActionCode: String? = null,
+    val targetSkill: SkillType? = null,
     val selfPhysStrain: Int? = null,
     val selfMentStrain: Int? = null,
     val otherPhysStrain: Int? = null,
