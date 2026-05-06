@@ -18,7 +18,7 @@ interface CombatInstanceDao {
     @Delete
     suspend fun delete (combatInstance: CombatInstance)
 
-    @Query("DELETE FROM combat_instance WHERE combatId NOT IN (SELECT DISTINCT combatId FROM save)")
+    @Query("DELETE FROM combat_instance WHERE (SELECT COUNT(*) FROM save WHERE save.combatId = combat_instance.combatId ) <= 1")
     suspend fun deleteEmptyCombats()
 
     @Query ("DELETE FROM combat_instance WHERE combatId IN (:combatIds)")

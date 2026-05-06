@@ -11,6 +11,9 @@ interface CharacterActionXrefDao {
     @Delete
     suspend fun delete (xref: CharacterActionXref)
 
+    @Query ("DELETE FROM character_action_xref WHERE charId = :charId")
+    suspend fun deleteMultiple (charId: Int)
+
     @Query ("SELECT actionCode FROM character_action_xref WHERE charId = :charId")
     suspend fun getActionCodesForCharacter (charId: Int): List<String>
 }

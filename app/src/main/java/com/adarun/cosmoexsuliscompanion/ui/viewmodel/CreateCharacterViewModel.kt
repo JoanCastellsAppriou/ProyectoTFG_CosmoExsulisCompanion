@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adarun.cosmoexsuliscompanion.data.model.Action
 import com.adarun.cosmoexsuliscompanion.data.model.Skills
+import com.adarun.cosmoexsuliscompanion.data.model.enums.ActionType
 import com.adarun.cosmoexsuliscompanion.data.model.enums.SkillType
 import com.adarun.cosmoexsuliscompanion.data.repository.ActionRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.CharacterActionXrefRepository
+import com.adarun.cosmoexsuliscompanion.data.repository.CharacterCombatSaveRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.CharacterRepository
+import com.adarun.cosmoexsuliscompanion.data.repository.CombatInstanceRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.EquipmentRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,8 +24,14 @@ class CreateCharacterViewModel (
     private val characterRepo: CharacterRepository,
     private val equipmentRepo: EquipmentRepository,
     private val actionRepo: ActionRepository,
-    private val charActions: CharacterActionXrefRepository
+    private val chaXactRepo: CharacterActionXrefRepository,
+    private val refCharacterId: Int? = null,
+    private val savesRepo: CharacterCombatSaveRepository,
+    private val combatsRepo: CombatInstanceRepository
 ): ViewModel() {
+
+
+
     // NAME =============================================================================
         private val _name = MutableStateFlow("")
         val nameState = _name.asStateFlow()
@@ -186,6 +195,30 @@ class CreateCharacterViewModel (
         }
     //===================================================================================
 
+
+    //===================================================================================
+    init {
+        if ( refCharacterId != null) {
+            viewModelScope.launch {
+                val character = characterRepo.getById(refCharacterId)
+
+                name = character.name
+                _name.value = character.name
+
+                _skills.value = character.baseSkills
+
+                weapon = character.weaponCode
+                armor = character.armorCode
+
+                val chosenActions = chaXactRepo.get(refCharacterId).filter { actionCode ->
+                    val action = actionRepo.getByCode(actionCode)
+                    action.type == ActionType.ABILITY
+                }
+            }
+        }
+    }
+    //===================================================================================
+
     fun checkRequiredLevel (action: Action, skills: Skills): Boolean {
         return when (action.skill) {
             SkillType.STRENGTH ->    skills.strength >=       action.reqLevel
@@ -224,26 +257,44 @@ class CreateCharacterViewModel (
 
     fun isValid(): Boolean = name.isNotBlank() && _skills.value.isValid() && allChoicesExhausted()
 
-    fun createCharacter (onDone: () -> Unit) {
-        if (isValid()) {
-            viewModelScope.launch {
-                val charId = characterRepo.insert(
+    fun saveCharacter (onDone: () -> Unit) {
+        if (!isValid()) return
+
+
+        viewModelScope.launch {
+            val charId = if (refCharacterId != null) {
+                characterRepo.update (
+                    refCharacterId,
                     instanceId,
                     name,
                     currentSkills,
                     weapon,
                     armor
                 )
+                savesRepo.deleteMultiple(refCharacterId)
+                combatsRepo.clean()
+                chaXactRepo.deleteMultiple (refCharacterId)
 
-                val actionsToAssign = defaultActions.value.map { action -> action.actionCode } + chosenAbilities.value.toList()
-
-                actionsToAssign.forEach { actionCode ->
-                    charActions.insert(charId.toInt(), actionCode)
-                }
-
-                onDone()
+                refCharacterId
             }
+            else {
+                characterRepo.insert (
+                    instanceId,
+                    name,
+                    currentSkills,
+                    weapon,
+                    armor
+                ).toInt()
+            }
+
+            val actionsToAssign =
+                defaultActions.value.map { action -> action.actionCode } + chosenAbilities.value.toList()
+
+            actionsToAssign.forEach { actionCode ->
+                chaXactRepo.insert(charId, actionCode)
+            }
+
+            onDone()
         }
-        else return
     }
 }

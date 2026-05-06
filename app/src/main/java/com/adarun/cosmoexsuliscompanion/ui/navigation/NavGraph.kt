@@ -1,5 +1,6 @@
 package com.adarun.cosmoexsuliscompanion.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -7,6 +8,7 @@ import androidx.navigation.compose.*
 import com.adarun.cosmoexsuliscompanion.data.database.AppDatabase
 import com.adarun.cosmoexsuliscompanion.data.repository.ActionRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.CharacterActionXrefRepository
+import com.adarun.cosmoexsuliscompanion.data.repository.CharacterCombatSaveRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.CharacterRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.CombatInstanceRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.EquipmentRepository
@@ -110,9 +112,9 @@ fun AppNavHost() {
 
             CharacterDetailScreen(
                 viewModel = viewModel,
-                onEditCharacter = { charId ->
+                onEditCharacter = { instanceId, charId ->
                     navController.navigate(
-                        NavRoutes.CreateCharacter.creationRoute(charId)
+                        NavRoutes.CreateCharacter.creationRoute(instanceId, charId)
                     )
                 },
                 onOpenCombat = { combatId ->
@@ -129,14 +131,22 @@ fun AppNavHost() {
                 .getString("instanceId")!!
                 .toInt()
 
+            val characterId = backStackEntry.arguments
+                ?.getString("charId")
+                ?.toIntOrNull()
+
+            Log.d("NEW/EDIT CHAR","InstID: $instanceId, CharID: $characterId")
+
             val repo = CharacterRepository(db.characterDao())
             val equipmentRepo = EquipmentRepository(db.equipmentDao())
             val actionRepo = ActionRepository(db.actionDao())
-            val chAcCrossReference = CharacterActionXrefRepository(db.characterActionXrefDao())
+            val chaXactRepo = CharacterActionXrefRepository(db.characterActionXrefDao())
+            val savesRepo = CharacterCombatSaveRepository(db.characterCombatSaveDao())
+            val combatsRepo = CombatInstanceRepository(db.combatInstanceDao(), db.characterCombatSaveDao(),repo)
 
             val viewModel: CreateCharacterViewModel = viewModel (
                 factory = SimpleFactory {
-                    CreateCharacterViewModel(instanceId, repo, equipmentRepo, actionRepo, chAcCrossReference)
+                    CreateCharacterViewModel(instanceId, repo, equipmentRepo, actionRepo, chaXactRepo, characterId, savesRepo, combatsRepo)
                 }
             )
 

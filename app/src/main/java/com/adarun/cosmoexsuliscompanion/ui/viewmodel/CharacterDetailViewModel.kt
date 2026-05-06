@@ -7,6 +7,7 @@ import com.adarun.cosmoexsuliscompanion.data.relation.CharacterLoadout
 import com.adarun.cosmoexsuliscompanion.data.repository.CharacterRepository
 import com.adarun.cosmoexsuliscompanion.data.repository.CombatInstanceRepository
 import com.adarun.cosmoexsuliscompanion.ui.viewmodel.enums.CharacterTab
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,8 @@ class CharacterDetailViewModel(
 
 
     // COMBATS ==========================================================================
-        val combatsWithSaves =
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val combatsWithSaves =
             loadout
                 .filterNotNull()
                 .flatMapLatest { currentLoadout ->

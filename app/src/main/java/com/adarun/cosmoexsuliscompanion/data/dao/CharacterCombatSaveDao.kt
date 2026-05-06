@@ -15,6 +15,9 @@ interface CharacterCombatSaveDao {
     @Delete
     suspend fun delete (save: CharacterCombatSave)
 
+    @Query ("DELETE FROM save WHERE charId = :charId")
+    suspend fun deleteMultiple (charId: Int)
+
     @Query ("SELECT * FROM save WHERE chSaveId = :saveId")
     suspend fun getById (saveId: Int): CharacterCombatSave?
 

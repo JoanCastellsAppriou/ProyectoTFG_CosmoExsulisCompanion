@@ -41,7 +41,7 @@ fun CreateCharacterScreen (
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    if (isFormValid) viewModel.createCharacter (onDone)
+                    if (isFormValid) viewModel.saveCharacter (onDone)
                 },
                 containerColor =
                     if (isFormValid) MaterialTheme.colorScheme.primary

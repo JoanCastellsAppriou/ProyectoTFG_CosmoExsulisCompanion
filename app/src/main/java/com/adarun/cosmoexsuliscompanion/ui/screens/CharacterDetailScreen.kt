@@ -20,7 +20,7 @@ import com.adarun.cosmoexsuliscompanion.ui.viewmodel.enums.CharacterTab
 @Composable
 fun CharacterDetailScreen (
     viewModel: CharacterDetailViewModel,
-    onEditCharacter: (Int) -> Unit,
+    onEditCharacter: (Int, Int) -> Unit,
     onOpenCombat: (Int) -> Unit
 ) {
     val loadout by viewModel.loadout.collectAsState()
@@ -71,7 +71,7 @@ fun CharacterDetailScreen (
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { onEditCharacter(currentLoadout.character.charId) }
+                    onClick = { onEditCharacter(currentLoadout.character.instanceId, currentLoadout.character.charId) }
                 ) {
                     Text("✏️")
                 }

@@ -18,7 +18,7 @@ interface ActionDao {
     suspend fun delete (action: Action)
 
     @Query ("SELECT * FROM `action` WHERE actionCode = :code")
-    fun getByCode (code: String): Action
+    suspend fun getByCode (code: String): Action
 
     @Query ("SELECT * FROM `action` WHERE actionCode IN (:codes)")
     fun getMultipleByCode (codes: List<String>): Flow<List<Action>>

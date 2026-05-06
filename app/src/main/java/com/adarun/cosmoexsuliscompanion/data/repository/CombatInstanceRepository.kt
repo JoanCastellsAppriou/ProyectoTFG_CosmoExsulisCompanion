@@ -33,7 +33,7 @@ class CombatInstanceRepository (
     }
 
     suspend fun delete (combat: CombatInstance) = combats.delete(combat)
-    suspend fun deleteEmptyCombats() = combats.deleteEmptyCombats()
+    suspend fun clean() = combats.deleteEmptyCombats()
     suspend fun deleteMultiple (combatList: List<Int>) = combats.deleteMultiple(combatList)
 
     suspend fun getById (id: Int) = combats.getById(id)

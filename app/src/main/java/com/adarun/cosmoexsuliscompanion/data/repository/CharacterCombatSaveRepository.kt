@@ -10,4 +10,6 @@ class CharacterCombatSaveRepository (private val dao: CharacterCombatSaveDao) {
     suspend fun insert (save: CharacterCombatSave){
         dao.insert(save)
     }
+
+    suspend fun deleteMultiple (charId: Int) = dao.deleteMultiple(charId)
 }

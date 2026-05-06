@@ -11,6 +11,9 @@ class CharacterRepository (private val dao: CharacterDao) {
     }
     suspend fun insert (character: Character) = dao.insert(character)
 
+    suspend fun update (id: Int, instance: Int, name: String, skills: Skills, weapon: String?, armor: String?) =
+        dao.update(Character(charId = id, instance, name, skills, weapon, armor))
+
     suspend fun deleteMultiple (ids: List<Int>) = dao.deleteMultiple(ids)
 
     suspend fun getById (id: Int) = dao.getById(id)

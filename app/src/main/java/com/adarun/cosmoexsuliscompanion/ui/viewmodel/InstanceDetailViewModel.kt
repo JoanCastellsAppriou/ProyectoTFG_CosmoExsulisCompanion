@@ -64,7 +64,7 @@ class InstanceDetailViewModel (
                         if (ids.isNotEmpty()) {
                             characterRepo.deleteMultiple(ids.toList())
                             _selectedCharacters.value = emptySet()
-                            combatRepo.deleteEmptyCombats()
+                            combatRepo.clean()
                         }
                     }
                     InstanceTab.COMBATS -> {
